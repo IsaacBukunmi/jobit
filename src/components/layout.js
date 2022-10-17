@@ -5,7 +5,7 @@ const Layout = ({children}) => {
   return (
     <main className="bg-secondary-color h-screen min-h-full">
         <TopNav />
-        <div className="px-14">
+        <div className="px-6 md:px-14">
             {children}
         </div>
     </main>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import AuthWrapper from '../components/auth-wrapper'
 import { PrimaryButton } from '../components/button'
 import { Input } from '../components/input'
@@ -15,7 +15,8 @@ const initialState = {
 
 const Login = () => {
 
-    const {isLoading, user} = useSelector(state =>  state.user)
+    const navigate = useNavigate()
+    const {isLoading, user} = useSelector(state =>  state.auth)
 
     const [values, setValues] = useState(initialState)
 
@@ -29,7 +30,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const {name, email, password } = values
+        const {email, password } = values
         if(!email || !password ){
             toast.error("fill out all details")
             return;
@@ -37,6 +38,14 @@ const Login = () => {
         dispatch(loginUser({email, password}))
            
     }
+
+    useEffect(() => {
+        if (user){
+            setTimeout(() => {
+                navigate('/')
+            }, 2000)
+        }
+    }, [user, navigate])
 
   return (
     <Layout>

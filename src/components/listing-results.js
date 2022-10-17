@@ -1,48 +1,93 @@
-import React from 'react'
-import { Checkbox, Input, RadioInput } from './input'
-import Logo from '../assets/images/jobit-logo.png'
+import React, { useEffect, useState } from 'react'
+import { Checkbox, Input, RadioInput } from './input';
+import Logo from '../assets/images/volks-logo.jpg';
+import axios from 'axios';
+import { GET_JOBS } from '../utils/endpoints';
+import { PrimaryButton } from './button'
+
+
 
 const ListingResults = () => {
-  return (
-    <div className='flex relative pt-10'>
-        <aside className='w-80 pr-5 fixed border-r border-grey-border h-full'>
-            <div>
-                <Checkbox id="full-time" value="" label="Full time" />
-                <Checkbox id="Part time" value="" label="Part time" />
-            </div>
-            <div className='mt-8'>
-                <h4 className='font-medium text-gray-300 mb-4'>LOCATION</h4>
-                <Input placeholder="City, state, zip code or country"/>
-            </div>
-            <div className='mt-6'>
-                <RadioInput id="london" value="" label="London" />
-                <RadioInput id="amsterdam" value="" label="Amsterdam" />
-                <RadioInput id="new-york" value="" label="New York" />
-                <RadioInput id="Berlin" value="" label="berlin" />
-            </div>
-        </aside>
-        <main className='flex-1 ml-80 pl-5'>
-            <div>
-                <div className='bg-white flex justify-between items-baseline p-4 rounded-md shadow-lg'>
-                    <div className='flex'>
-                        <div className='h-[90px] w-[90px]'>
-                            <img className='w-full h-full object-contain' src={Logo} alt="" />
-                        </div>
-                        <div>
-                            <small>Company Name</small>
-                            <h2>Job Title</h2>
-                            <p>Full time</p>
-                        </div>
-                    </div>
-                    <div className='flex'>
-                        <p>location</p>
-                        <p>time</p>
-                    </div>
+
+    const [allJobs, setAllJobs] = useState([])
+    const [searchTerm, setSearchTerm] = useState("Developer careers frontend backend")
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value)
+    }
+
+    useEffect(() => {
+        axios.get(GET_JOBS, {
+            params: {
+                engine:"google_jobs",
+                api_key:  process.env.REACT_APP_SERAP_API_KEY,
+                q:searchTerm
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+            setAllJobs(response?.data?.jobs_results)
+          })
+          .catch(function (error) {
+            console.log(error);
+          })    
+    }, [searchTerm])
+
+
+    return (
+        <>
+            <div className="bg-search-bg h-44 mt-10">
+                <div className='flex gap-8 justify-center items-center h-full'>
+                    <Input  className='w-[50vw]' type="search" placeholder="Title, company, expertise" name="search" handleChange={handleSearch}/>
+                    <PrimaryButton  className=' w-40'>Search</PrimaryButton>
                 </div>
             </div>
-        </main>
-    </div>
-  )
+            <div className='md:flex relative pt-10'>
+                <aside className='w-full md:w-80 pr-5 md:fixed md:border-r border-grey-border h-full'>
+                    <div>
+                        <Checkbox id="full-time" value="" label="Full time" />
+                        <Checkbox id="Part time" value="" label="Part time" />
+                    </div>
+                    <div className='mt-8'>
+                        <h4 className='font-medium text-gray-300 mb-4'>LOCATION</h4>
+                        <Input placeholder="City, state, zip code or country"/>
+                    </div>
+                    <div className='mt-6'>
+                        <RadioInput id="london" value="" label="London" />
+                        <RadioInput id="amsterdam" value="" label="Amsterdam" />
+                        <RadioInput id="new-york" value="" label="New York" />
+                        <RadioInput id="Berlin" value="" label="berlin" />
+                    </div>
+                </aside>
+                <main className='md:flex-1 md:ml-80 md:pl-5'>
+                    <div>
+                        {
+                            allJobs.map((item) => {
+                                return(
+                                    <div className='bg-white flex justify-between items-baseline p-4 rounded-md shadow-lg mb-6' key={item?.job_id}>
+                                        <div className='flex  gap-3'>
+                                            <div className='h-[90px] w-[90px]'>
+                                                <img className='w-full h-full object-cover' src={item?.thumbnail} alt="" />
+                                            </div>
+                                            <div className='self-start'>
+                                                <small className='text-secondary-color font-bold text-xs'>{item?.company_name}</small>
+                                                <h2 className='text-secondary-color font-normal text-lg pb-2'>{item?.title}</h2>
+                                                <p className='text-xs border border-secondary-color text-secondary-color font-medium w-fit rounded p-1'>{item?.detected_extensions.schedule_type}</p>
+                                            </div>
+                                        </div>
+                                        <div className='flex gap-4 text-s text-[#B9BDCF]'>
+                                            <p> {item?.location}</p>
+                                            <p> {item?.detected_extensions.posted_at || "Few Days Ago"}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </main>
+            </div>
+        </>
+    )
 }
 
 export default ListingResults

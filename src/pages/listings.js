@@ -4,9 +4,10 @@ import ListingResults from '../components/listing-results'
 import ListingSearch from '../components/listing-search'
 
 const Listings = () => {
+
   return (
     <Layout>
-        <ListingSearch />
+        {/* <ListingSearch /> */}
         <ListingResults />
     </Layout>
   )

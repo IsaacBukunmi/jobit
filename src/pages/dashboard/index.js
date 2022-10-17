@@ -1,9 +1,7 @@
-import React from 'react'
+import AddJob from "./add-job";
+import AllJobs from "./all-jobs";
+import Profile from "./profile";
+import Stats from "./stats";
+import DashboardLayout from "./dashboard-layout";
 
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
-
-export default Dashboard
+export {AddJob, AllJobs, Profile, Stats, DashboardLayout}

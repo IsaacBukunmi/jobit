@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AuthWrapper from '../components/auth-wrapper'
 import { PrimaryButton } from '../components/button'
 import { Input } from '../components/input'
@@ -7,6 +7,7 @@ import Layout from '../components/layout'
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../redux/user/userSlice'
+import { useEffect } from 'react'
 
 const initialState = {
     name: '',
@@ -16,7 +17,9 @@ const initialState = {
 
 const Register = () => {
 
-    const {isLoading, user} = useSelector(state =>  state.user)
+    const navigate = useNavigate()
+
+    const {isLoading, user} = useSelector(state =>  state.auth)
 
     const [values, setValues] = useState(initialState)
     
@@ -37,6 +40,14 @@ const Register = () => {
         }
         dispatch(registerUser({name, email, password}))
     }
+
+    useEffect(() => {
+        if (user){
+            setTimeout(() => {
+                navigate('/')
+            }, 2000)
+        }
+    }, [user, navigate])
 
   return (
     <Layout>
