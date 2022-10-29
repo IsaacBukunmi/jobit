@@ -7,7 +7,10 @@ module.exports = {
     extend: {
       colors: {
         "primary-color": "var(--primary-color)",
+        "primary-transparent": "var(--primary-transparent)",
         "secondary-color": "var(--secondary-color)",
+        "pending-transparent": "var(--pending-transparent)",
+        "declined-transparent": "var(--declined-transparent)",
         "white":"var(--white)",
         "black":"var(--black)",
         "grey":"var(--grey)",

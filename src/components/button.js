@@ -13,3 +13,14 @@ export const OutlineButton = ({children, className, onClick, loading}) => {
         </button>
     )
 }
+
+export const SecondaryButton = ({children, className, onClick, loading}) => {
+    return(
+        <button onClick={onClick} className={`bg-transparent border-none block ${className}`} disabled={loading}>
+            { loading ? 
+                "loading..." : 
+                children 
+            }
+        </button>
+    )
+}

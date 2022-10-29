@@ -29,20 +29,20 @@ export const RadioInput = ({value, id, label}) => {
     )
 }
 
-export const Select = ({label, name, placeholder, handleChange, className, labelStyle, options, ...otherProps}) => {
+export const Select = ({label, name, value, placeholder, handleChange, className, labelStyle, options, ...otherProps}) => {
     return(
         <div>
             {
                 label && <label htmlFor={name} className={`text-sm font-medium ${labelStyle}`}>{label}</label> 
             }
-            <select id="countries" placeholder={placeholder} name={name}  className={`border border-gray-300 rounded-md w-full h-12 pl-3 block ${className}`}>
+            <select id="countries" placeholder={placeholder} value={value} name={name} onChange={handleChange}  className={`border border-gray-300 rounded-md w-full h-12 pl-3 block ${className}`}>
                 {
                     placeholder &&  <option selected disabled>{placeholder}</option>
                 }
                 {
                     options.map((ele) => {
                         return(
-                            <option onChange={handleChange} value={ele}>{ele}</option>
+                            <option  value={ele}>{ele}</option>
                         )
                     })
                 }

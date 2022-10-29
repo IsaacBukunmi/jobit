@@ -8,7 +8,10 @@
 #root,
 #docs-root {
   --primary-color:  #00a6fb;
+  --primary-transparent: rgb(0, 166, 251, 0.3);
   --secondary-color: #0F172A;
+  --pending-transparent: rgba(193, 152, 2, 0.301);
+  --declined-transparent:rgb(253, 61, 61, 0.3);
   --white: #ffffff;
   --black: #000000;
   --grey: #9E9ABC;

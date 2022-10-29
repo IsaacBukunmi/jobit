@@ -51,10 +51,12 @@ const userSlice = createSlice({
     name:"auth", 
     initialState,
     reducers:{
-        logoutUser: (state) => {
+        logoutUser: (state, {payload}) => {
             state.user = null
             removeUserFromLocalStorage()
-            toast.success("Logged out successfully")
+            if(payload){
+                toast.success(payload)
+            }
         }
     },
     extraReducers:{

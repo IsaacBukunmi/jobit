@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Checkbox, Input, RadioInput } from './input';
-import Logo from '../assets/images/volks-logo.jpg';
+import moment from 'moment';
 import axios from 'axios';
 import { GET_JOBS } from '../utils/endpoints';
 import { PrimaryButton } from './button'
+import { useSelector } from 'react-redux';
 
 
 
 const ListingResults = () => {
 
+    const { query } = useSelector((state) => state.jobListing)
+    console.log(query)
+
     const [allJobs, setAllJobs] = useState([])
     const [searchTerm, setSearchTerm] = useState("Developer careers frontend backend")
+
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -19,19 +24,23 @@ const ListingResults = () => {
     useEffect(() => {
         axios.get(GET_JOBS, {
             params: {
-                engine:"google_jobs",
-                api_key:  process.env.REACT_APP_SERAP_API_KEY,
-                q:searchTerm
+                query: query, 
+                num_pages: '10'
+            },
+            headers:{
+                'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+                'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
             }
           })
           .then(function (response) {
-            console.log(response);
-            setAllJobs(response?.data?.jobs_results)
+            setAllJobs(response?.data?.data)
           })
           .catch(function (error) {
             console.log(error);
           })    
     }, [searchTerm])
+
+    console.log(allJobs)
 
 
     return (
@@ -67,17 +76,17 @@ const ListingResults = () => {
                                     <div className='bg-white flex justify-between items-baseline p-4 rounded-md shadow-lg mb-6' key={item?.job_id}>
                                         <div className='flex  gap-3'>
                                             <div className='h-[90px] w-[90px]'>
-                                                <img className='w-full h-full object-cover' src={item?.thumbnail} alt="" />
+                                                <img className='w-full h-full object-cover' src={item?.employer_logo} alt="" />
                                             </div>
                                             <div className='self-start'>
-                                                <small className='text-secondary-color font-bold text-xs'>{item?.company_name}</small>
-                                                <h2 className='text-secondary-color font-normal text-lg pb-2'>{item?.title}</h2>
-                                                <p className='text-xs border border-secondary-color text-secondary-color font-medium w-fit rounded p-1'>{item?.detected_extensions.schedule_type}</p>
+                                                <small className='text-secondary-color font-bold text-xs'>{item?.employer_name}</small>
+                                                <h2 className='text-secondary-color font-normal text-lg pb-2'>{item?.job_title}</h2>
+                                                <p className='text-xs border border-secondary-color text-secondary-color font-medium w-fit rounded p-1'>{item?.job_employment_type}</p>
                                             </div>
                                         </div>
                                         <div className='flex gap-4 text-s text-[#B9BDCF]'>
-                                            <p> {item?.location}</p>
-                                            <p> {item?.detected_extensions.posted_at || "Few Days Ago"}</p>
+                                            <p> {`${item?.job_city} ${item?.job_state}`}</p>
+                                            <p> {moment(item?.job_posted_at_timestamp, "YYYYMMDD").fromNow()  || "Few Days Ago"}</p>
                                         </div>
                                     </div>
                                 )

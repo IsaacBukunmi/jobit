@@ -8,7 +8,7 @@ const TopNav = () => {
   const { user } = useSelector((state) =>  state.auth)
 
   return (
-    <nav className='flex justify-between text-white py-4 border-b border-grey-border px-6 md:px-14'>
+    <nav className='bg-secondary-color flex justify-between text-white py-4 border-b border-grey-border px-6 md:px-10 sticky top-0 left-0 z-10'>
       <div>
         <p className='text-white font-bold text-lg'>J<span className='text-primary-color'>ob</span>it <HdrStrong className='text-primary-color'/></p>
       </div>

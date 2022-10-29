@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../redux/user/userSlice'
 import { useEffect } from 'react'
+import { routes } from '../utils/routes'
 
 const initialState = {
     name: '',
@@ -64,7 +65,7 @@ const Register = () => {
                         <Input label="Password" type="password" placeholder="****" name="password" handleChange={handleChange}/>
                 </div>
                 <PrimaryButton className="w-full mt-7" loading={isLoading}>Sign Up</PrimaryButton>
-                <p className='text-center mt-2'>Have an account already? <span className="text-primary-color font-medium"><Link to="/login">Login</Link></span></p>
+                <p className='text-center mt-2'>Have an account already? <span className="text-primary-color font-medium"><Link to={routes.LOGIN}>Login</Link></span></p>
                 </form>
             </AuthWrapper>
         </div>

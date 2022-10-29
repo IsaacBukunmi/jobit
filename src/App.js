@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Listings from "./pages/listings";
 import ProtectedRoute from "./routes/protected-route";
+import { routes } from "./utils/routes";
 
 
 function App() {
@@ -17,14 +18,14 @@ function App() {
           </ProtectedRoute>
         }>
           <Route index element={<Stats />} />
-          <Route path="all-jobs" element={<AllJobs />} />
-          <Route path="add-job" element={<AddJob />} />
-          <Route path="profile" element={<Profile />} /> 
+          <Route path={routes.ALL_JOBS} element={<AllJobs />} />
+          <Route path={routes.ADD_JOB} element={<AddJob />} />
+          <Route path={routes.PROFILE} element={<Profile />} /> 
         </Route>
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/job-listings" element={<Listings />}/>
+        <Route path={routes.HOME} element={<Home />} />
+        <Route path={routes.REGISTER} element={<Register />} />
+        <Route path={routes.LOGIN} element={<Login />} />
+        <Route path={routes.LISTINGS} element={<Listings />}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer />

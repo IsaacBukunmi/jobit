@@ -4,6 +4,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import { logoutUser } from '../redux/user/userSlice'
+import { routes } from '../utils/routes'
 
 const SideBar = () => {
 
@@ -14,31 +15,31 @@ const SideBar = () => {
             id:1,
             title: "Stats",
             icon: <GraphicEqOutlined />,
-            link: "/"
+            link: routes.DASHBOARD
         },
         {
             id:2,
             title: "All Jobs",
             icon: <WorkHistoryOutlined />,
-            link: "/all-jobs"
+            link: routes.ALL_JOBS
         },
         {
             id:3,
             title: "Add Job",
             icon: <AddBoxOutlined />,
-            link: "/add-job"
+            link: routes.ADD_JOB
         },
         {
             id:4,
             title: "Profile",
             icon: <PermIdentity />,
-            link: "/profile"
+            link: routes.PROFILE
         },
         {
             id:5,
             title: "Job Listings",
             icon: <ListOutlined />,
-            link: "/job-listings"
+            link: routes.LISTINGS
         }
     ]
 
@@ -55,7 +56,7 @@ const SideBar = () => {
                     )
                 })
             }
-           <li className='hover:text-primary-color cursor-pointer' onClick={() => dispatch(logoutUser())}><LogoutOutlined /><span className='hidden md:inline-block  md:pl-3'>Log out</span></li>
+           <li className='hover:text-primary-color cursor-pointer' onClick={() => dispatch(logoutUser("Logging out..."))}><LogoutOutlined /><span className='hidden md:inline-block  md:pl-3'>Log out</span></li>
         </ul>
     </aside>
   )

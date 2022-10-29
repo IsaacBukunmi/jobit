@@ -7,6 +7,7 @@ import Layout from '../components/layout'
 import { toast } from 'react-toastify';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from '../redux/user/userSlice'
+import { routes } from '../utils/routes'
 
 const initialState = {
     email: '',
@@ -35,8 +36,7 @@ const Login = () => {
             toast.error("fill out all details")
             return;
         }
-        dispatch(loginUser({email, password}))
-           
+        dispatch(loginUser({email, password}))      
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const Login = () => {
                 </div>
                 <PrimaryButton className="w-full mt-7" loading={isLoading}>Sign In</PrimaryButton>
                 </form>
-                <p className='text-center mt-2'>Don't have an account? <span className="text-primary-color font-medium"><Link to="/register">Register</Link></span></p>
+                <p className='text-center mt-2'>Don't have an account? <span className="text-primary-color font-medium"><Link to={routes.REGISTER}>Register</Link></span></p>
             </AuthWrapper>
         </div>
     </Layout>

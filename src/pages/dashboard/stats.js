@@ -4,7 +4,7 @@ const Stats = () => {
   return (
     <div className='grid grid-cols-3 gap-8'>
       <div>
-        <div className='bg-[#C19702]  h-40 flex flex-col justify-center align-middle text-center rounded-md mb-5'>
+        <div className='bg-[rgb(193,151,2)]  h-40 flex flex-col justify-center align-middle text-center rounded-md mb-5'>
           <h1 className='font-bold text-6xl text-white mb-2'>20🙂</h1>
           <p className='text-secondary-color font-medium'>Pending Applications</p>
         </div>
@@ -12,7 +12,7 @@ const Stats = () => {
           <h1 className='font-bold text-6xl text-white mb-2'>28🤩</h1>
           <p className='text-secondary-color font-medium'>Interview Scheduled</p>
         </div>
-        <div className='bg-[#fd3d3d]  h-40 flex flex-col justify-center align-middle text-center rounded-md'>
+        <div className='bg-[rgb(253,61,61)]  h-40 flex flex-col justify-center align-middle text-center rounded-md'>
           <h1 className='font-bold text-6xl text-white mb-2'>10😔</h1>
           <p className='text-secondary-color font-medium'>Declined Applications</p>
         </div>
