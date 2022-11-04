@@ -19,6 +19,7 @@ Job management web application to manage and track users job applications
 
 # Links
 [Live Link]("")
+
 [Github Repo](https://github.com/IsaacBukunmi/jobit)
 
 # Credit

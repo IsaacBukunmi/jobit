@@ -14,10 +14,10 @@ const ChartsSection = ({data}) => {
     return (
         <div>   
             <div className='flex justify-between items-center'>
-                <h3 className='text-2xl text-white font-medium'>Monthly Applications</h3>
+                <h3 className='text-lg sm:text-2xl text-white font-medium'>Monthly Applications</h3>
                 <div className='flex items-center gap-x-2'>
                     <Switch handleChange={handleSwitchChange} value={checked}/>
-                    <p className='text-white'>Toggle Chart</p>
+                    <p className='text-white hidden md:block'>Toggle Chart</p>
                 </div>
             </div>
             <div>

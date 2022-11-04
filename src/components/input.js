@@ -20,10 +20,10 @@ export const Checkbox = ({value, id, label}) => {
 }
 
 
-export const RadioInput = ({value, id, label}) => {
+export const RadioInput = ({value, name, id, label, handleChange, checked}) => {
     return(
         <div className="flex items-center mb-2">
-            <input id={id} type="radio" value={value} className="w-4 h-4 text-primary-color bg-gray-100 rounded border-gray-300 focus:ring-primary-color " />
+            <input id={id} type="radio" name={name} value={value} checked={checked} onChange={handleChange} className="w-4 h-4 text-primary-color bg-gray-100 rounded border-gray-300 focus:ring-primary-color " />
             <label for={id} className="ml-2 text-sm font-normal text-white">{label}</label>
         </div>
     )
