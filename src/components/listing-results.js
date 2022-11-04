@@ -5,6 +5,9 @@ import axios from 'axios';
 import { GET_JOBS } from '../utils/endpoints';
 import { PrimaryButton } from './button'
 import { useSelector } from 'react-redux';
+import Logo from "../assets/images/volks-logo.jpg"
+import ListingCard from './listing-card';
+import { mockJobListings } from '../utils/mockData';
 
 
 
@@ -22,22 +25,22 @@ const ListingResults = () => {
     }
 
     useEffect(() => {
-        axios.get(GET_JOBS, {
-            params: {
-                query: query, 
-                num_pages: '10'
-            },
-            headers:{
-                'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-                'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
-            }
-          })
-          .then(function (response) {
-            setAllJobs(response?.data?.data)
-          })
-          .catch(function (error) {
-            console.log(error);
-          })    
+        // axios.get(GET_JOBS, {
+        //     params: {
+        //         query: query, 
+        //         num_pages: '10'
+        //     },
+        //     headers:{
+        //         'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+        //         'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
+        //     }
+        //   })
+        //   .then(function (response) {
+        //     setAllJobs(response?.data?.data)
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   })    
     }, [searchTerm])
 
     console.log(allJobs)
@@ -45,14 +48,14 @@ const ListingResults = () => {
 
     return (
         <>
-            <div className="bg-search-bg h-44 mt-10">
-                <div className='flex gap-8 justify-center items-center h-full'>
-                    <Input  className='w-[50vw]' type="search" placeholder="Title, company, expertise" name="search" handleChange={handleSearch}/>
-                    <PrimaryButton  className=' w-40'>Search</PrimaryButton>
+            <div className="bg-search-bg h-40 mt-10 px-4">
+                <div className='flex flex-col md:flex-row gap-8 justify-center md:items-center h-full'>
+                    <Input  className='w-full md:w-[50vw]' type="search" placeholder="Title, company, expertise" name="search" handleChange={handleSearch}/>
+                    <PrimaryButton  className='bg-primary-color w-full md:w-40'>Search</PrimaryButton>
                 </div>
             </div>
             <div className='md:flex relative pt-10'>
-                <aside className='w-full md:w-80 pr-5 md:fixed md:border-r border-grey-border h-full'>
+                <aside className='w-full md:w-80 pr-5 md:border-r border-grey-border h-auto md:h-screen'>
                     <div>
                         <Checkbox id="full-time" value="" label="Full time" />
                         <Checkbox id="Part time" value="" label="Part time" />
@@ -68,27 +71,12 @@ const ListingResults = () => {
                         <RadioInput id="Berlin" value="" label="berlin" />
                     </div>
                 </aside>
-                <main className='md:flex-1 md:ml-80 md:pl-5'>
+                <main className='md:flex-1 md:pl-5'>
                     <div>
                         {
-                            allJobs.map((item) => {
+                            (allJobs.length !== 0 ? allJobs : mockJobListings).map((item) => {
                                 return(
-                                    <div className='bg-white flex justify-between items-baseline p-4 rounded-md shadow-lg mb-6' key={item?.job_id}>
-                                        <div className='flex  gap-3'>
-                                            <div className='h-[90px] w-[90px]'>
-                                                <img className='w-full h-full object-cover' src={item?.employer_logo} alt="" />
-                                            </div>
-                                            <div className='self-start'>
-                                                <small className='text-secondary-color font-bold text-xs'>{item?.employer_name}</small>
-                                                <h2 className='text-secondary-color font-normal text-lg pb-2'>{item?.job_title}</h2>
-                                                <p className='text-xs border border-secondary-color text-secondary-color font-medium w-fit rounded p-1'>{item?.job_employment_type}</p>
-                                            </div>
-                                        </div>
-                                        <div className='flex gap-4 text-s text-[#B9BDCF]'>
-                                            <p> {`${item?.job_city} ${item?.job_state}`}</p>
-                                            <p> {moment(item?.job_posted_at_timestamp, "YYYYMMDD").fromNow()  || "Few Days Ago"}</p>
-                                        </div>
-                                    </div>
+                                    <ListingCard item = {item}/>
                                 )
                             })
                         }

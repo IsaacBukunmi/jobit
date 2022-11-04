@@ -40,10 +40,10 @@ const JobCard = ({_id, position, company, jobLocation, jobType, createdAt, statu
         </div>
         <div className='py-4'>
             <div className='mb-2'>
-            <p className='capitalize text-[15px] font-medium'><LocationOnOutlined className="text-gray-400 mr-2 relative -top-[2px]" />{jobLocation}</p> 
+                <p className='capitalize text-[15px] font-medium'><LocationOnOutlined fontSize='small' className="text-gray-400 mr-2 relative -top-[2px]" />{jobLocation}</p> 
             </div>
             <div>
-            <p className='capitalize text-[15px] font-medium'><WorkOutline className="text-gray-400 mr-2 relative -top-[2px]"/>{jobType.replace("-", " ")}</p>
+                <p className='capitalize text-[15px] font-medium'><WorkOutline fontSize='small' className="text-gray-400 mr-2 relative -top-[2px]"/>{jobType.replace("-", " ")}</p>
             </div>
         </div>
         <div className='flex justify-between items-center'>

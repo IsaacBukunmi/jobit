@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Listings from "./pages/listings";
 import ProtectedRoute from "./routes/protected-route";
 import { routes } from "./utils/routes";
+import ListingDetails from "./pages/listing-details";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.LOGIN} element={<Login />} />
         <Route path={routes.LISTINGS} element={<Listings />}/>
+        <Route path={routes.LiSTING_DETAILS} element={<ListingDetails />}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer />

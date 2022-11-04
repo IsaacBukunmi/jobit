@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { toast } from "react-toastify";
 import customFetch from "../../utils/axios";
-import { JOBS } from "../../utils/endpoints";
+import { JOBS, STATS } from "../../utils/endpoints";
 
 const initialFiltersState = {
   search: '',
@@ -25,7 +25,13 @@ const initialState = {
 export const getAllJobs = createAsyncThunk(
     'allJobs/getJobs',
     async (_, thunkAPI) => {
-      let url = JOBS;
+
+      const {page, search, searchStatus, searchType, sort} = thunkAPI.getState().allJobs
+
+      let url = `${JOBS}?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+      if(search){
+        url = url + `&search=${search}`;
+      }
   
       try {
         const resp = await customFetch.get(url, {
@@ -45,7 +51,11 @@ export const getAllJobs = createAsyncThunk(
 export const getJobStats = createAsyncThunk('allJobs/getJobStats', 
   async (_, thunkAPI) => {
     try {
-      const resp = await customFetch.get('/jobs/stats');
+      const resp = await customFetch.get(STATS, {
+        headers: {
+          authorization: `Bearer ${thunkAPI.getState().auth.user.token}`,
+        }
+      });
       console.log(resp.data);
       return resp.data;
     }catch (error) {
@@ -64,6 +74,13 @@ const allJobsSlice = createSlice({
       },
       hideLoading: (state) => {
         state.isLoading = false
+      },
+      handleChange: (state, { payload: { name, value } }) => {
+        state.page = 1;
+        state[name] = value;
+      },
+      changePage: (state, {payload}) => {
+        state.page = payload
       }
     },
     extraReducers: {
@@ -73,8 +90,22 @@ const allJobsSlice = createSlice({
         [getAllJobs.fulfilled]: (state, { payload }) => {
           state.isLoading = false;
           state.jobs = payload.jobs;
+          state.numOfPages = payload.numOfPages;
+          state.totalJobs = payload.totalJobs;
         },
         [getAllJobs.rejected]: (state, { payload }) => {
+          state.isLoading = false;
+          toast.error(payload);
+        },
+        [getJobStats.pending]: (state) => {
+          state.isLoading = true;
+        },
+        [getJobStats.fulfilled]: (state, { payload }) => {
+          state.isLoading = false;
+          state.stats = payload.defaultStats;
+          state.monthlyApplications = payload.monthlyApplications;
+        },
+        [getJobStats.rejected]: (state, { payload }) => {
           state.isLoading = false;
           toast.error(payload);
         },
@@ -82,6 +113,6 @@ const allJobsSlice = createSlice({
     
 })
 
-export const {showLoading, hideLoading} = allJobsSlice.actions
+export const {showLoading, hideLoading, handleChange, changePage} = allJobsSlice.actions
 
 export default allJobsSlice.reducer

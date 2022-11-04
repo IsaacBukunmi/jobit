@@ -1,24 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import ChartsSection from '../../components/charts-section'
+import StatsCards from '../../components/stats-cards'
+import { getJobStats } from '../../redux/job/allJobsSlice'
 
 const Stats = () => {
+  const {isLoading, monthlyApplications, stats} = useSelector(state => state.allJobs)
+  const dispatch = useDispatch()
+
+  const {declined, interview, pending} = stats
+
+  useEffect(() => {
+    dispatch(getJobStats())
+  }, [])
+
   return (
-    <div className='grid grid-cols-3 gap-8'>
-      <div>
-        <div className='bg-[rgb(193,151,2)]  h-40 flex flex-col justify-center align-middle text-center rounded-md mb-5'>
-          <h1 className='font-bold text-6xl text-white mb-2'>20🙂</h1>
-          <p className='text-secondary-color font-medium'>Pending Applications</p>
-        </div>
-        <div className='bg-primary-color  h-40 flex flex-col justify-center align-middle text-center rounded-md mb-5'>
-          <h1 className='font-bold text-6xl text-white mb-2'>28🤩</h1>
-          <p className='text-secondary-color font-medium'>Interview Scheduled</p>
-        </div>
-        <div className='bg-[rgb(253,61,61)]  h-40 flex flex-col justify-center align-middle text-center rounded-md'>
-          <h1 className='font-bold text-6xl text-white mb-2'>10😔</h1>
-          <p className='text-secondary-color font-medium'>Declined Applications</p>
-        </div>
-      </div>
+    <div className='block lg:grid lg:grid-cols-3 gap-8 '>
+      <StatsCards declined={declined} interview={interview} pending={pending}/>
       <div className='col-span-2'>
-      startter
+        <ChartsSection data={monthlyApplications}/>
       </div>
     </div>
   )
