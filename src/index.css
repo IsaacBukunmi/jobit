@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+.root,
+#root,
+#docs-root {
+  --primary-color:  #00a6fb;
+  --primary-transparent: rgb(0, 166, 251, 0.3);
+  --secondary-color: #0F172A;
+  --pending-transparent: rgba(193, 152, 2, 0.301);
+  --declined-transparent:rgb(253, 61, 61, 0.3);
+  --white: #ffffff;
+  --black: #000000;
+  --grey: #9E9ABC;
+  --border:rgb(203 213 225/.1);
+}
+
+body {
+  margin: 0;
+  background-color: #0F172A;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
