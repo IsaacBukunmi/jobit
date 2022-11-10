@@ -11,7 +11,10 @@ import { mockJobListings } from '../utils/mockData';
 import Empty from './empty';
 import { RestartAlt } from '@mui/icons-material';
 
-
+const initialJobType = {
+    "full-time": false, 
+    "part-time": false
+}
 
 const ListingResults = () => {
 
@@ -21,6 +24,7 @@ const ListingResults = () => {
     const [allJobs, setAllJobs] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [checkedLocation, setCheckedLocation] = useState("")
+    const [checkedJobType, setCheckedJobType] = useState(initialJobType)
     const [searchResult, setSearchResult] = useState(mockJobListings)
 
 
@@ -31,7 +35,19 @@ const ListingResults = () => {
     const onLocation = (e) => {
         setCheckedLocation(e.target.value)
         const locationTerm = e.target.value.toLowerCase()
-        let filterResults =  mockJobListings.filter((ele) => (ele.job_city.toLowerCase().includes(locationTerm)) || (ele.job_country.toLowerCase().includes(locationTerm)))
+        let filterResults =  allJobs.filter((ele) => (ele.location.toLowerCase().includes(locationTerm)))
+        setSearchResult(filterResults)
+    }
+
+    const onJobType = (e) => {
+        setCheckedJobType((prevJobType) => ({
+            ...prevJobType,
+            [e.target.name]: !checkedJobType[e.target.name]
+        }))
+
+        console.log(checkedJobType)
+       
+        let filterResults =  mockJobListings.filter((ele) => (ele.job_employment_type.replace(" ", "-").toLowerCase().includes(e.target.name)))
         setSearchResult(filterResults)
     }
 
@@ -45,26 +61,45 @@ const ListingResults = () => {
         setSearchResult(mockJobListings)
         setCheckedLocation("")
         setSearchTerm("")
+        setCheckedJobType(initialJobType)
     }
 
+    // useEffect(() => {
+    //     axios.get(GET_JOBS, {
+    //         params: {
+    //             query: query, 
+    //             num_pages: '10'
+    //         },
+    //         headers:{
+    //             'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+    //             'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
+    //         }
+    //       })
+    //       .then(function (response) {
+    //         setAllJobs(response?.data?.data)
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //       })    
+    // }, [searchTerm])
+
     useEffect(() => {
-        // axios.get(GET_JOBS, {
-        //     params: {
-        //         query: query, 
-        //         num_pages: '10'
-        //     },
-        //     headers:{
-        //         'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-        //         'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
-        //     }
-        //   })
-        //   .then(function (response) {
-        //     setAllJobs(response?.data?.data)
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   })    
-    }, [searchTerm])
+        axios.get(GET_JOBS, {
+            params: {
+                engine: "google_jobs",
+                q: query,
+                hl: "en",
+                api_key: process.env.REACT_APP_SERAP_API_KEY
+            }
+          })
+          .then(function (response) {
+            console.log(response)
+            setAllJobs(response?.data?.jobs_results)
+          })
+          .catch(function (error) {
+            console.log(error);
+          })    
+    }, [])
 
     console.log(allJobs)
 
@@ -84,10 +119,10 @@ const ListingResults = () => {
             </div>
             <div className='md:flex relative pt-10'>
                 <aside className='w-full md:w-80 pr-5 md:border-r border-grey-border h-auto md:h-screen'>
-                    <div>
-                        <Checkbox id="full-time" value="" label="Full time"  />
-                        <Checkbox id="Part time" value="" label="Part time" />
-                    </div>
+                    {/* <div>
+                        <Checkbox id="full-time" checked={checkedJobType["full-time"]} name="full-time" value="full time" label="Full time" handleChange={onJobType}/>
+                        <Checkbox id="part-time" checked={checkedJobType["part-time"]} name="part-time" value="part time" label="Part time" handleChange={onJobType}/>
+                    </div> */}
                     <div className='mt-8'>
                         <h4 className='font-medium text-gray-300 mb-4'>LOCATION</h4>
                         <Input placeholder="City, state, zip code or country" type="text" handleChange={onLocation}/>
@@ -102,15 +137,15 @@ const ListingResults = () => {
                         <SecondaryButton className='text-primary-color' onClick={handleFilterReset}> <RestartAlt fontSize='small' className='mb-1'/> Reset Filter</SecondaryButton>
                     </div>
                 </aside>
-                <main className='md:flex-1 md:pl-5'>
+                <main className='md:flex-1 md:pl-5 mt-8 pb-8 md:mt-0 md:pb-0'>
                     {
-                        searchResult.length === 0 ? 
+                        searchResult?.length === 0 ? 
                         <Empty>
                             <p className='text-center mb-4'>No Results Found</p>
                         </Empty> :
                         <div>
                             {
-                                (allJobs.length !== 0 ? allJobs : searchResult).map((item) => {
+                                (allJobs?.length !== 0 ? allJobs : searchResult)?.map((item) => {
                                     return(
                                         <ListingCard item = {item}/>
                                     )

@@ -89,7 +89,7 @@ const AllJobs = () => {
           <Loading />
         </div> : jobs.length === 0 ?
         <Empty>
-          <p className='text-center mb-4'>No Job Application added yet</p>
+          <p className='text-center mb-4'>No Job Application found</p>
           <PrimaryButton className="w-44 self-center my-0 mx-auto" onClick={() => navigate(routes.ADD_JOB)}>Add Job</PrimaryButton>
         </Empty> :
         <div>

@@ -18,10 +18,9 @@ Job management web application to manage and track users job applications
 - Material UI Icons
 
 # Links
-[Live Link]("")
+[Live Link]("https://jobitapp.netlify.app/")
 
 [Github Repo](https://github.com/IsaacBukunmi/jobit)
 
 # Credit
-- John Smilda (Backend API)
-- R Search (Job Listing API)
+- Google Jobs - SerpAPI (Job Listing API)
