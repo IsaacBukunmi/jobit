@@ -27,7 +27,7 @@ function App() {
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.LOGIN} element={<Login />} />
         <Route path={routes.LISTINGS} element={<Listings />}/>
-        <Route path={routes.LiSTING_DETAILS} element={<ListingDetails />}/>
+        <Route path={routes.LISTING_DETAILS} element={<ListingDetails />}/>
         <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer />

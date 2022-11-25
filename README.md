@@ -1,3 +1,10 @@
+# Table of content
+- [Introduction](#jobit)
+- [Features](#features)
+- [Stacks](#stacks)
+- [Relevant links](#links)
+- [Credit](#credit)
+
 # Jobit
 Job management web application to manage and track users job applications
 
@@ -23,4 +30,4 @@ Job management web application to manage and track users job applications
 [Github Repo](https://github.com/IsaacBukunmi/jobit)
 
 # Credit
-- Google Jobs - SerpAPI (Job Listing API)
+- Adzuna Jobs API (Job Listing API) [link](https://developer.adzuna.com/)

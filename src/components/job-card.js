@@ -25,12 +25,12 @@ const JobCard = ({_id, position, company, jobLocation, jobType, createdAt, statu
     <div className='bg-white p-4 rounded'>
         <div className='flex justify-between'>
             <div className='flex items-center'>
-                <div className={`bg-[#000] h-[72px] w-[72px] rounded-md text-white text-center mx-0 my-auto leading-[72px] text-5xl`}>
+                <div className={`bg-[#000] h-[72px] w-[72px] rounded-md text-white text-center mx-0 my-auto leading-[72px] text-5xl shrink-0`}>
                     {/* <img className='w-full h-full rounded-md object-cover' src={Logo} alt="logo" /> */}
                     {company[0]}
                 </div>
                 <div className='ml-2'>
-                    <p className='text-secondary-color font-bold'>{position}</p>
+                    <p className='text-secondary-color font-bold w-[200px] whitespace-nowrap overflow-hidden text-ellipsis'>{position}</p>
                     <p className='mb-0 text-gray-400'>{company}</p>
                     <div className={`${theme[status]} w-fit rounded-full py-1 px-4 text-center font-medium text-[14px]`}>
                         <p className='before:w-5 before:h-5 before:rounded-full before:bg-primary-color '>{status}</p>
