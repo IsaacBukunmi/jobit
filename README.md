@@ -25,9 +25,9 @@ Job management web application to manage and track users job applications
 - Material UI Icons
 
 # Links
-[Live Link]("https://jobitapp.netlify.app/")
+[Live Link](https://jobitapp.netlify.app/)
 
 [Github Repo](https://github.com/IsaacBukunmi/jobit)
 
 # Credit
-- Adzuna Jobs API (Job Listing API) [link](https://developer.adzuna.com/)
+- Adzuna Jobs API (Job Listing API) - [link](https://developer.adzuna.com/)
